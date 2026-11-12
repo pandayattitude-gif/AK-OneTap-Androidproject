@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#0b0b10">
+<title>AK OneTap Panel</title>
+<style>
+:root{--red:#ff4757;--green:#2ed573;--bg:#0b0b10;--muted:#a8a8b3}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#35151b 0%,#101016 45%,var(--bg) 100%);font-family:Arial,sans-serif;color:#fff;display:grid;place-items:center;padding:22px}
+.panel{width:min(100%,390px);background:rgba(21,21,29,.96);border:1px solid rgba(255,71,87,.75);border-radius:20px;box-shadow:0 0 32px #ff475733,0 18px 55px #0009;overflow:hidden}
+.header{padding:22px 20px;background:linear-gradient(120deg,#ff4757,#b51f39);text-align:center}
+.logo{font-size:11px;letter-spacing:3px;opacity:.85;font-weight:bold}
+h1{font-size:23px;margin:7px 0 0;letter-spacing:1px}
+.body{padding:22px}
+.status{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:22px}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#777;margin-right:7px}
+.status.active .dot{background:var(--green);box-shadow:0 0 10px var(--green)}
+.group{margin:20px 0 25px}
+.row{display:flex;justify-content:space-between;align-items:center;font-size:14px;margin-bottom:13px}
+.value{color:var(--red);font-weight:bold;font-variant-numeric:tabular-nums}
+input[type=range]{width:100%;accent-color:var(--red);height:7px}
+.scale{display:flex;justify-content:space-between;color:#777;font-size:10px;margin-top:7px}
+button{width:100%;border:0;border-radius:12px;padding:15px;background:var(--green);color:#fff;font-weight:800;font-size:14px;letter-spacing:1px;box-shadow:0 5px 18px #2ed57333;cursor:pointer}
+button.off{background:var(--red);box-shadow:0 5px 18px #ff475733}
+.note{font-size:11px;color:#858591;line-height:1.5;text-align:center;margin:17px 4px 0}
+.footer{text-align:center;color:#62626e;font-size:10px;letter-spacing:2px;padding:0 0 19px}
+</style>
+</head>
+<body>
+<main class="panel">
+  <header class="header"><div class="logo">AK GAMING TOOLS</div><h1>AK OneTap Panel</h1></header>
+  <section class="body">
+    <div class="status" id="status"><span><i class="dot"></i><span id="statusText">PANEL INACTIVE</span></span><span>v1.0</span></div>
+    <div class="group">
+      <div class="row"><label for="sens">Aim Sensitivity</label><span class="value"><span id="sensValue">2.0</span>x</span></div>
+      <input id="sens" type="range" min="1" max="5" step=".1" value="2">
+      <div class="scale"><span>1.0x</span><span>3.0x</span><span>5.0x</span></div>
+    </div>
+    <div class="group">
+      <div class="row"><label for="dpi">DPI Scale</label><span class="value" id="dpiValue">560</span></div>
+      <input id="dpi" type="range" min="400" max="900" step="10" value="560">
+      <div class="scale"><span>400</span><span>650</span><span>900</span></div>
+    </div>
+    <button id="toggle">ACTIVATE PANEL</button>
+    <p class="note">These controls save and display your preferred settings inside this app. They do not change another game's aim, Android system DPI, or device settings.</p>
+  </section>
+  <div class="footer">AK ONETAP • ANDROID EDITION</div>
+</main>
+<script>
+const sens=document.getElementById('sens'), dpi=document.getElementById('dpi');
+const sensValue=document.getElementById('sensValue'), dpiValue=document.getElementById('dpiValue');
+const toggle=document.getElementById('toggle'), status=document.getElementById('status');
+const statusText=document.getElementById('statusText');
+sens.addEventListener('input',()=>sensValue.textContent=Number(sens.value).toFixed(1));
+dpi.addEventListener('input',()=>dpiValue.textContent=dpi.value);
+let active=false;
+toggle.addEventListener('click',()=>{
+  active=!active;
+  toggle.textContent=active?'DEACTIVATE PANEL':'ACTIVATE PANEL';
+  toggle.classList.toggle('off',active);
+  status.classList.toggle('active',active);
+  statusText.textContent=active?'PANEL ACTIVE':'PANEL INACTIVE';
+});
+</script>
+</body>
+</html>
